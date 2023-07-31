@@ -13,10 +13,28 @@ const userData = async(req,res)=>{
 
         }
     } catch (error) {
-        
+        console.error(error);
+    }
+}
+
+const deleteUser =async(req,res)=>{
+    try {
+        console.log('hjkghhj');
+        const userid=req.body.userid
+        console.log('user', userid);
+        const deleted = await userModal.deleteOne({_id:userid})
+        console.log(deleted);
+        if(deleted){
+            res.status(200).json({deleted:true})
+        }else{
+            res.status(200).json({deleted:false})
+        }
+    } catch (error) {
+        console.error(error);
     }
 }
 
 module.exports={
-    userData
+    userData,
+    deleteUser
 }

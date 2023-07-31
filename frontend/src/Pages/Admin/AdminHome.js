@@ -7,12 +7,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { logOutUser } from '../../Redux/User/UserSlice';
 import { Fragment, useEffect, useState } from 'react';
-import { getUsers } from '../../Api/AdminApi';
+import { deleteUser, getUsers } from '../../Api/AdminApi';
 import Table from 'react-bootstrap/Table';
+import { MDBCol, MDBInput } from "mdbreact";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash, faUserPen } from '@fortawesome/free-solid-svg-icons';
 
 function AdminHome() {
 
     const [user,setUser]=useState([])
+    const [searchInput,setSearchInput]=useState('')
     const navigate=useNavigate()
     const dispatch=useDispatch()
 
@@ -40,7 +44,22 @@ function AdminHome() {
         navigate('/login')
     }
 
+    const handleSearchInput=(e)=>{
+      setSearchInput(e.target.value)
+    }
     
+    const handleDeleteUser=async(userid)=>{
+      deleteUser(userid).then(()=>{
+        setUser(user.filter(user=>user._id !==userid))
+        console.log('user deleted sucessfully');
+      }).catch(error=>console.error(error))
+    }
+
+    const handleEditUser=async(userid)=>{
+
+    }
+
+    const userdatas= user.filter(user=> user.email.toLowerCase().includes(searchInput.toLowerCase()))
 
   return (
     <Fragment>
@@ -66,35 +85,37 @@ function AdminHome() {
         </Navbar.Collapse>
       </Container>
     </Navbar>
-        <Table striped bordered hover variant="dark">
+    <div style={{alignItems:'center', justifyContent:'center', display:'flex', paddingTop:'50px', flexDirection:'column'}}>
+        <h2>USER DETAILS</h2>
+        <MDBCol md="3">
+          <MDBInput hint="Search" type="text" containerClass="mt-0" value={searchInput} onChange={handleSearchInput} />
+        </MDBCol>
+        <Table striped bordered hover variant="dark" style={{width:'600px', borderRadius:'10px '}}>
           <thead>
             <tr>
               <th>#</th>
-              <th>First Name</th>
-              <th>Last Name</th>
-              <th>Username</th>
+              <th>Name</th>
+              <th>Emali</th>
+              <th>Mobile No.</th>
+              <th>Update</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>1</td>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
+            {userdatas.map(user=>(
+              <tr key={user._id}>
+              <td>{user._id}</td>
+              <td>{user.name}</td>
+              <td>{user.email}</td>
+              <td>{user.mob}</td>
+              <td style={{ textAlign:'center'}}>
+                <FontAwesomeIcon icon={faTrash} style={{color: "#ffffff",}} onClick={()=>handleDeleteUser(user._id)} />
+                <FontAwesomeIcon icon={faUserPen} style={{color: "#ffffff", paddingLeft:'20px'}} onClick={()=>navigate(`/admin/edituser/${user._id}`)} />
+              </td>
             </tr>
-            <tr>
-              <td>2</td>
-              <td>Jacob</td>
-              <td>Thornton</td>
-              <td>@fat</td>
-            </tr>
-            <tr>
-              <td>3</td>
-              <td colSpan={2}>Larry the Bird</td>
-              <td>@twitter</td>
-            </tr>
+            ))}
           </tbody>
         </Table>
+      </div>
     </Fragment>
   );
 }
