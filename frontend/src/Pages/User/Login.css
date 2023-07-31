@@ -1,0 +1,32 @@
+.form {
+    /* box-shadow: 5px 10px #888888; */
+    /* box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px; */
+    padding: 15px;
+    border-radius: 10px;
+    width: 400px;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    color: black;
+  }
+  .form h2 {
+    font-size: 45px;
+    text-align: left;
+  }
+  
+  .form input,
+  .form button,
+  .form span,
+  .form a {
+    font-size: 20px;
+  }
+  .main{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+    background-image: url('https://images.unsplash.com/photo-1551893281-e585f2fbe3a8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+    background-position: center;
+    background-size: cover;
+  }
