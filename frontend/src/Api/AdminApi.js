@@ -33,12 +33,12 @@ export async function deleteUser(userid){
     }
 }
 
-export async function editUserData(name,email,mob){
+export async function editUserData(id,name,email,mob){
     try {
-        const data= await adminApi.post('/edituser',{name,email,mob})
+        const data= await adminApi.post('/updateuser',{id,name,email,mob})
         return data
     } catch (error) {
-        
+        console.log(error.message);
     }
 }
 export async function userDetails(userid){

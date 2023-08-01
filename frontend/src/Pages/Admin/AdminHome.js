@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { logOutUser } from '../../Redux/User/UserSlice';
 import { Fragment, useEffect, useState } from 'react';
-import { deleteUser, getUsers } from '../../Api/AdminApi';
+import { deleteUser, editUserData, getUsers } from '../../Api/AdminApi';
 import Table from 'react-bootstrap/Table';
 import { MDBCol, MDBInput } from "mdbreact";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -55,11 +55,15 @@ function AdminHome() {
       }).catch(error=>console.error(error))
     }
 
-    const handleEditUser=async(userid)=>{
-
-    }
-
-    const userdatas= user.filter(user=> user.email.toLowerCase().includes(searchInput.toLowerCase()))
+    const userdatas = user.filter(user => {
+      const searchInputLower = searchInput.toLowerCase();
+      const emailMatch = user.email.toLowerCase().includes(searchInputLower);
+      const nameMatch = user.name.toLowerCase().includes(searchInputLower);
+      const mobMatch = user.mob.toString().includes(searchInputLower);
+    
+      return emailMatch || nameMatch || mobMatch;
+    });
+    
 
   return (
     <Fragment>

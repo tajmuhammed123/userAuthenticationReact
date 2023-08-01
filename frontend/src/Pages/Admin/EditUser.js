@@ -1,36 +1,51 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Form from 'react-bootstrap/Form';
-import './Login.css';
-import { useNavigate } from 'react-router-dom';
+import '../User/Login';
+import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { useDispatch } from 'react-redux';
-import { editUserData } from '../../Api/AdminApi';
+import { editUserData, userDetails } from '../../Api/AdminApi';
 
 function EditUser() {
+    
   const [value, setValue] = useState({
-    name: '', mob: '', email: response.data.user.email
+    name: '', mob: '', email: ''
   });
+  const {id}=useParams()
   const navigate = useNavigate();
-  const dispatch = useDispatch()
-  const GenerateError = (err) => {
-    toast.error(err, {
-      position: 'top-center',
-      theme: 'colored',
-      autoClose: 3000
-    });
-  };
+//   const GenerateError = (err) => {
+//     toast.error(err, {
+//       position: 'top-center',
+//       theme: 'colored',
+//       autoClose: 3000
+//     });
+//   };
+
+  useEffect(()=>{
+        const userData=async()=>{
+            try {
+                console.log('hghcfnf');
+                const response= await userDetails(id)
+                console.log('values');
+                console.log(response.data);
+                setValue({name:response.data.user.name,email:response.data.user.email,mob:response.data.user.mob})
+            } catch (error) {
+                console.log(error.message);
+            }
+        }
+    userData()
+  },[id])
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const {email,password} = value
 
-      if (!email) {
+      if (!value.email) {
         console.log("no email");
-        GenerateError("Email is required")
+        // GenerateError("Email is required")
       } else {
-        const response = await editUserData(id,email)
+        console.log(value.email);
+        const response = await editUserData(id,value.name,value.email,value.mob)
         if(response.data.updated){
            navigate('/admin/home')
         }else{
@@ -48,16 +63,16 @@ function EditUser() {
         <h2 className="mb-3">Edit User</h2>
         <Form.Group className="mb-3" controlId="formGroupEmail">
           <Form.Label>Name</Form.Label>
-          <Form.Control type="text" name='name' onChange={(e) => { setValue({ ...value, [e.target.name]: e.target.value }) }} placeholder="Enter Name" />
+          <Form.Control type="text" name='name' value={value.name} onChange={(e) => { setValue({ ...value, [e.target.name]: e.target.value }) }} placeholder="Enter Name" />
         </Form.Group>
         <Form.Group className="mb-3" controlId="formGroupEmail">
           <Form.Label>Mob. Number</Form.Label>
-          <Form.Control type="number" name='mob' onChange={(e) => { setValue({ ...value, [e.target.name]: e.target.value }) }} placeholder="Enter Mob. Number" />
+          <Form.Control type="number" name='mob' value={value.mob} onChange={(e) => { setValue({ ...value, [e.target.name]: e.target.value }) }} placeholder="Enter Mob. Number" />
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formGroupEmail">
           <Form.Label>Email address</Form.Label>
-          <Form.Control type="email" name='email' onChange={(e) => { setValue({ ...value, [e.target.name]: e.target.value }) }} placeholder="Enter Email" />
+          <Form.Control type="email" name='email' value={value.email} onChange={(e) => { setValue({ ...value, [e.target.name]: e.target.value }) }} placeholder="Enter Email" />
         </Form.Group>
 
         <button className="btn btn-primary" type='submit'>Edit</button>

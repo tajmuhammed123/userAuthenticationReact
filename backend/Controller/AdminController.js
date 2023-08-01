@@ -34,7 +34,35 @@ const deleteUser =async(req,res)=>{
     }
 }
 
+const getUser = async(req,res)=>{
+    try {
+        const id = req.params.id
+        const userData= await userModal.findOne({_id:id})
+        if(userData){
+            res.status(200).json({user:userData,status:true,message:'user found'})
+        }else{
+            res.status(200).json({status:false,message:'user not found'})
+        }
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+const editUser = async(req,res)=>{
+    try {
+        console.log('hjkfhj');
+        const {id,name,email,mob} = req.body
+        await userModal.findOneAndUpdate({_id:id},{$set:{name:name,email:email,mob:mob}},{new:true}).then(response=>{
+            res.json({updated:true,data:response})
+        })
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
 module.exports={
     userData,
-    deleteUser
+    deleteUser,
+    getUser,
+    editUser
 }
