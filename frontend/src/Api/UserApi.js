@@ -28,3 +28,20 @@ export async function UserLogin(details){
         console.log(err);
     }
 }
+export async function UpdateImage(id,img){
+    try{
+        const formData= new FormData()
+        formData.append('image',img)
+        formData.append('userId',id)
+        const config={
+            header:{
+                'content-type':'multipart/form-data',
+                userId : id
+            },WithCreadentials:true
+        }
+        const data = await userApi.post("/imgupdate",formData,config)
+        return data
+    }catch(err){
+        console.log(err);
+    }
+}

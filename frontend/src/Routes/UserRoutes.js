@@ -6,14 +6,13 @@ import Login from '../Pages/User/Login'
 import Signup from '../Pages/User/SignUp'
 import Home from '../Pages/User/Home'
 import Profile from '../Pages/User/Profile'
-import EditUser from "../Pages/Admin/EditUser"
+import UserPublic from './UserPublic'
 
 function UserRoutes() {
   return (
     <Routes>
-        <Route path="/edituser" element={<EditUser /> }/>
         <Route path="/profile" element={<Profile /> }/>
-        <Route path="/login" element={<Login /> }/>
+        <Route path="/login" element={<UserPublic> <Login /></UserPublic> }/>
         <Route path="/signup" element={<Signup /> }/>
         <Route path="/" element={<Home /> }/>
     </Routes>

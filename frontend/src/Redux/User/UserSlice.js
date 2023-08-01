@@ -5,7 +5,8 @@ const initialState={
     name:'',
     email:'',
     mob:'',
-    is_admin:''
+    is_admin:'',
+    image:''
 
 }
 
@@ -19,6 +20,7 @@ const userSlice=createSlice({
             state.email= action.payload.email
             state.mob= action.payload.mob
             state.is_admin=action.payload.is_admin
+            state.image=action.payload.image
         },
 
         logOutUser:(state,action)=>{
@@ -27,6 +29,7 @@ const userSlice=createSlice({
             state.email=""
             state.mob=""
             state.is_admin=""
+            state.image=""
         }
     }
 })

@@ -36,7 +36,8 @@ function AdminHome() {
             name:'',
             email:'',
             mob:'',
-            is_admin:''
+            is_admin:'',
+            image:''
         }))
         navigate('/login')
     }
@@ -66,7 +67,7 @@ function AdminHome() {
     
 
   return (
-    <Fragment>
+    <div style={{backgroundImage:'url(https://images.unsplash.com/photo-1501676491272-7bbd3e71f7e1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2038&q=80)', backgroundPosition:'center', backgroundSize:'cover', height:'750px'}}>
         <Navbar expand="lg" className="bg-body-tertiary">
       <Container fluid>
         <Navbar.Brand href="#">ADMIN HOME</Navbar.Brand>
@@ -89,7 +90,9 @@ function AdminHome() {
         </Navbar.Collapse>
       </Container>
     </Navbar>
-    <div style={{alignItems:'center', justifyContent:'center', display:'flex', paddingTop:'50px', flexDirection:'column'}}>
+    <div style={{ display:'flex',justifyContent:'center', paddingTop:'50px' }}>
+      <div style={{backgroundColor:'white', flexDirection:'column', display:'flex', alignItems:'center', padding:'20px', borderRadius:'10px'}}>
+
         <h2>USER DETAILS</h2>
         <MDBCol md="3">
           <MDBInput hint="Search" type="text" containerClass="mt-0" value={searchInput} onChange={handleSearchInput} />
@@ -119,8 +122,9 @@ function AdminHome() {
             ))}
           </tbody>
         </Table>
+        </div>
       </div>
-    </Fragment>
+    </div>
   );
 }
 

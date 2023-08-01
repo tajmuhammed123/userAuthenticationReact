@@ -52,8 +52,8 @@ const editUser = async(req,res)=>{
     try {
         console.log('hjkfhj');
         const {id,name,email,mob} = req.body
-        await userModal.findOneAndUpdate({_id:id},{$set:{name:name,email:email,mob:mob}},{new:true}).then(response=>{
-            res.json({updated:true,data:response})
+        await userModal.findOneAndUpdate({_id:id},{$set:{name:name,email:email,mob:mob}},{new:true}).then(res=>{
+            res.json({updated:true,data:res})
         })
     } catch (error) {
         console.log(error.message);

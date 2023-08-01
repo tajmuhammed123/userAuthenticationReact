@@ -5,17 +5,19 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { logOutUser } from '../../Redux/User/UserSlice';
-import { Fragment } from 'react';
+import { logOutUser, setUserDetails } from '../../Redux/User/UserSlice';
+import { Fragment, useEffect, useState } from 'react';
 import React from 'react';
 import { MDBCol, MDBContainer, MDBRow, MDBCard, MDBCardTitle, MDBCardText, MDBCardBody, MDBCardImage, MDBBtn } from 'mdb-react-ui-kit';
+import { UpdateImage } from '../../Api/UserApi';
 
 
 function App() {
 
     const navigate=useNavigate()
     const dispatch=useDispatch()
-    const {id,name,email,mob}=useSelector(state=>state.user)
+    const {id,name,email,mob,image}=useSelector(state=>state.user)
+    const [img,setImg]=useState('')
     const handleLogout=()=>{
         console.log('user logged out');
         localStorage.removeItem('token')
@@ -24,19 +26,40 @@ function App() {
             name:'',
             email:'',
             mob:'',
-            is_admin:''
+            is_admin:'',
+            image:''
         }))
         navigate('/')
     }
+    useEffect(()=>{
+      console.log(image);
+    })
+
+    const updateImage=async(e)=>{
+      e.preventDefault()
+        const response= await UpdateImage(id,img)
+        console.log(response);
+        if(response.data.updated){
+          console.log('updated');
+          dispatch(setUserDetails({
+            id:response.data.data._id,
+            name:response.data.data.name,
+            email:response.data.data.email,
+            mob:response.data.data.mob,
+            image:response.data.data.image
+          }))
+        }
+    }
+
     const handleLogIn=()=>{
         navigate('/login')
     }
 
   return (
-    <Fragment>
+    <div style={{ backgroundImage:'url(https://images.unsplash.com/photo-1511649475669-e288648b2339?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1932&q=80)', backgroundPosition:'center', backgroundSize:'cover' }}>
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container fluid>
-        <Navbar.Brand href="#">USER PROFILE</Navbar.Brand>
+        <Navbar.Brand onClick={()=>{navigate('/')}}>USER PROFILE</Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
           <Nav
@@ -45,7 +68,6 @@ function App() {
             navbarScroll
           >
             <Nav.Link onClick={()=>{navigate('/')}}>Home</Nav.Link>
-            <Nav.Link href="#action2">Link</Nav.Link>
           </Nav>
           
             {localStorage.getItem('token') ? <Form className='d-flex align-items-center'>
@@ -56,7 +78,7 @@ function App() {
         </Navbar.Collapse>
       </Container>
     </Navbar>
-        <div className="vh-100" style={{ backgroundColor: '#9de2ff' }}>
+        <div className="vh-100">
           <MDBContainer>
             <MDBRow className="justify-content-center">
               <MDBCol md="9" lg="7" xl="5" className="mt-5">
@@ -66,7 +88,7 @@ function App() {
                       <div className="flex-shrink-0">
                         <MDBCardImage
                           style={{ width: '180px', borderRadius: '10px' }}
-                          src='https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-1.webp'
+                          src={ image ? `/images/${image}` : 'https://www.pngall.com/wp-content/uploads/5/User-Profile-PNG-Image.png'}
                           alt='Generic placeholder image'
                           fluid />
                       </div>
@@ -90,9 +112,9 @@ function App() {
                             <p className="mb-0">8.5</p>
                           </div> */}
                         </div>
-                        <div className="d-flex pt-1">
-                          <MDBBtn outline className="me-1 flex-grow-1">Chat</MDBBtn>
-                          <MDBBtn className="flex-grow-1">Follow</MDBBtn>
+                        <div className="">
+                        <Form.Control onChange={(e)=>setImg(e.target.files[0])} accept='image/*' type="file" /><br/>
+                          <MDBBtn onClick={updateImage}>Follow</MDBBtn>
                         </div>
                       </div>
                     </div>
@@ -103,7 +125,7 @@ function App() {
           </MDBContainer>
         </div>
 
-    </Fragment>
+    </div>
   );
 }
 

@@ -47,9 +47,23 @@ const useLogin=async(req,res)=>{
     }
 }
 
+const updateImage=async(req,res)=>{
+    try {
+        const id=req.body.userId
+        const image=req.file.filename
+        const updateImg = await UserModel.findOneAndUpdate({_id:id},{$set:{image:image}},{new:true}).then((response)=>{
+            res.json({updated:true,data:response})
+        })
+        console.log(updateImg);
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
 
 
 module.exports= {
     UseReg,
-    useLogin
+    useLogin,
+    updateImage
 }

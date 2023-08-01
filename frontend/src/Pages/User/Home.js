@@ -9,6 +9,7 @@ import { Fragment } from 'react';
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
+import './home.css'
 
 
 function App() {
@@ -21,7 +22,7 @@ function App() {
     }
 
   return (
-    <Fragment>
+    <div className='home'>
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container fluid>
         <Navbar.Brand href="#">USER HOME</Navbar.Brand>
@@ -42,7 +43,7 @@ function App() {
         </Navbar.Collapse>
       </Container>
     </Navbar>
-    </Fragment>
+    </div>
   );
 }
 

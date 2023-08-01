@@ -3,9 +3,10 @@ import Form from 'react-bootstrap/Form';
 import './Login.css';
 import { useNavigate } from 'react-router-dom';
 import { RegUser } from '../../Api/UserApi';
-import { toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
 import { setUserDetails } from '../../Redux/User/UserSlice';
+import 'react-toastify/dist/ReactToastify.css'
 
 function Signup() {
   const [value, setValue] = useState({
@@ -25,14 +26,16 @@ function Signup() {
     e.preventDefault();
 
     try {
-      const {email,password} = value
+      const {email,password,name} = value
 
       if (!email) {
         console.log("no email");
         GenerateError("Email is required")
       } else if (!password) {
         GenerateError("Password is required")
-      } else {
+      } else if(!name){
+        GenerateError("Name is required")
+      }else {
         const response = await RegUser(value)
         console.log(response);
         toast(response.data.alert)
@@ -43,11 +46,12 @@ function Signup() {
           name:response.data.user.name,
           email:response.data.user.email,
           mob:response.data.user.mob,
-          is_admin:response.data.user.is_admin
+          is_admin:response.data.user.is_admin,
+          image:response.data.user.image
         }))
         navigate('/');
       }
-    } 
+    }
     } catch (error) {
       console.log(error);
     }
@@ -84,6 +88,7 @@ function Signup() {
         >
           Already have an Account?
         </span>
+        <ToastContainer />
       </Form>
     </div>
   );

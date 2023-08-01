@@ -6,7 +6,8 @@ import { useNavigate, Link } from 'react-router-dom';
 import { UserLogin } from '../../Api/UserApi';
 import { useDispatch } from 'react-redux';
 import { setUserDetails } from '../../Redux/User/UserSlice';
-import { toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'
 
 function Login() {
     const [value,setValue]=useState('')
@@ -17,7 +18,7 @@ function Login() {
       toast.error(err, {
         position: 'top-center',
         theme: 'colored',
-        autoClose: 3000
+        autoClose: 3000,
       });
     };
     const handleSubmit = async (e) => {
@@ -42,7 +43,8 @@ function Login() {
             name:response.data.user.name,
             email:response.data.user.email,
             mob:response.data.user.mob,
-            is_admin:response.data.is_admin
+            is_admin:response.data.user.is_admin,
+            image:response.data.user.image
           }))
           if(response.data.user.is_admin){
             navigate('/admin/home');
@@ -72,6 +74,7 @@ function Login() {
       <Link to='/signup'>
         Dont have an Account?
       </Link>
+      <ToastContainer />
     </Form>
     </div>
   )
