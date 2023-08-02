@@ -7,11 +7,12 @@ import Signup from '../Pages/User/SignUp'
 import Home from '../Pages/User/Home'
 import Profile from '../Pages/User/Profile'
 import UserPublic from './UserPublic'
+import UserProtect from "./UserProtect"
 
 function UserRoutes() {
   return (
     <Routes>
-        <Route path="/profile" element={<Profile /> }/>
+        <Route path="/profile" element={<UserProtect><Profile /></UserProtect> }/>
         <Route path="/login" element={<UserPublic> <Login /></UserPublic> }/>
         <Route path="/signup" element={<Signup /> }/>
         <Route path="/" element={<Home /> }/>

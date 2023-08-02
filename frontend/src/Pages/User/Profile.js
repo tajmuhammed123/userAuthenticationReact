@@ -6,7 +6,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { logOutUser, setUserDetails } from '../../Redux/User/UserSlice';
-import { Fragment, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import React from 'react';
 import { MDBCol, MDBContainer, MDBRow, MDBCard, MDBCardTitle, MDBCardText, MDBCardBody, MDBCardImage, MDBBtn } from 'mdb-react-ui-kit';
 import { UpdateImage } from '../../Api/UserApi';
@@ -114,7 +114,7 @@ function App() {
                         </div>
                         <div className="">
                         <Form.Control onChange={(e)=>setImg(e.target.files[0])} accept='image/*' type="file" /><br/>
-                          <MDBBtn onClick={updateImage}>Follow</MDBBtn>
+                          <MDBBtn onClick={updateImage}>Update Image</MDBBtn>
                         </div>
                       </div>
                     </div>

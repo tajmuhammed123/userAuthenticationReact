@@ -8,8 +8,9 @@ app.use(cors());
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+require('dotenv').config()
 
-mongoose.connect('mongodb://0.0.0.0:27017/users', {
+mongoose.connect(process.env.MONGODB_URL, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })

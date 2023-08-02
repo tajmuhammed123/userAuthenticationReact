@@ -46,7 +46,9 @@ function EditUser() {
       } else {
         console.log(value.email);
         const response = await editUserData(id,value.name,value.email,value.mob)
+        console.log(response);
         if(response.data.updated){
+          console.log('update');
            navigate('/admin/home')
         }else{
           toast('something went wrong')

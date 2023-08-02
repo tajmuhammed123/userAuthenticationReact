@@ -1,10 +1,34 @@
 const userModal = require('../Models/userModels')
+require('dotenv').config()
+
+const useLogin=async(req,res)=>{
+    try {
+        console.log('hjkj');
+        const {email,password}=req.body
+        let exists= await UserModel.findOne({email:email})
+        if(exists){
+            const access = await bcrypt.compare(password,exists.password)
+            console.log('exists');
+            if(access){
+                console.log('user logined');
+                const token = jwt.sign({userId: access._id},process.env.JwtSecretKey,{expiresIn:'1m'})
+                return res.status(200).json({ user:exists,token:token, message:'Login', status:true })
+            }else{
+                return res.status(404).json({alert:"Password is wrong", status:false})
+            }
+        }else{
+            return res.status(201).json({alert:"No Account in this email", status:false})
+        }
+    } catch (error) {
+        console.log(error.message);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+}
+
 
 const userData = async(req,res)=>{
     try {
-        console.log('ghgfh');
         const data = await userModal.find({is_admin:false})
-        console.log('ghgfh');
         console.log(data);
         if(data){
             res.status(200).json({status:true,data:data})
@@ -52,8 +76,8 @@ const editUser = async(req,res)=>{
     try {
         console.log('hjkfhj');
         const {id,name,email,mob} = req.body
-        await userModal.findOneAndUpdate({_id:id},{$set:{name:name,email:email,mob:mob}},{new:true}).then(res=>{
-            res.json({updated:true,data:res})
+        await userModal.findOneAndUpdate({_id:id},{$set:{name:name,email:email,mob:mob}},{new:true}).then(response=>{
+            res.json({updated:true,data:response})
         })
     } catch (error) {
         console.log(error.message);
@@ -61,6 +85,7 @@ const editUser = async(req,res)=>{
 }
 
 module.exports={
+    useLogin,
     userData,
     deleteUser,
     getUser,

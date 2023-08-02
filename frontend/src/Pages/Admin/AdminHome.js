@@ -39,10 +39,10 @@ function AdminHome() {
             is_admin:'',
             image:''
         }))
-        navigate('/login')
+        navigate('/admin/login')
     }
     const handleLogIn=()=>{
-        navigate('/login')
+        navigate('/admin/login')
     }
 
     const handleSearchInput=(e)=>{

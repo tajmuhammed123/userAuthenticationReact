@@ -7,9 +7,9 @@ adminApi.interceptors.request.use((req) => {
     if (localStorage.getItem("token")) {
         console.log("intersrptor");
         req.headers.Authorization = "Bearer" + localStorage.getItem("token");
-        return req; 
     }
     console.log("not the if of interseptor");
+    return req; 
 });
 
 export async function getUsers(){

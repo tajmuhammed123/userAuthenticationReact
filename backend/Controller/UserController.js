@@ -1,6 +1,7 @@
 const UserModel =require('../Models/userModels')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+require('dotenv').config()
 
 const UseReg=async (req, res) => {
     try {
@@ -14,7 +15,7 @@ const UseReg=async (req, res) => {
         }else{
             const hash = await bcrypt.hash(password,10)
             const newuser = await UserModel.create({name:name,email:email,password:hash,mob:mob,is_admin:false})
-            const token = jwt.sign({ userId: newuser._id }, 'shhitssecret', { expiresIn: '1m' });
+            const token = jwt.sign({ userId: newuser._id }, process.env.JwtSecretKey, { expiresIn: '1m' });
             return res.status(200).json({ token: token,user:newuser, alert:'Registred', status: true});
         }
     } catch (error) {
@@ -33,7 +34,7 @@ const useLogin=async(req,res)=>{
             console.log('exists');
             if(access){
                 console.log('user logined');
-                const token = jwt.sign({userId: access._id},'shhitssecret',{expiresIn:'1m'})
+                const token = jwt.sign({userId: access._id},process.env.JwtSecretKey,{expiresIn:'1m'})
                 return res.status(200).json({ user:exists,token:token, message:'Login', status:true })
             }else{
                 return res.status(404).json({alert:"Password is wrong", status:false})
