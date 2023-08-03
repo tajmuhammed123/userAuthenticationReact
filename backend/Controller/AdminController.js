@@ -1,11 +1,13 @@
 const userModal = require('../Models/userModels')
+const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
 require('dotenv').config()
 
 const useLogin=async(req,res)=>{
     try {
         console.log('hjkj');
         const {email,password}=req.body
-        let exists= await UserModel.findOne({email:email})
+        let exists= await userModal.findOne({email:email})
         if(exists){
             const access = await bcrypt.compare(password,exists.password)
             console.log('exists');
@@ -84,10 +86,31 @@ const editUser = async(req,res)=>{
     }
 }
 
+const addUser = async(req,res)=>{
+    try {
+        console.log('user registered');
+        console.log("FN : userReg");
+        const {name,email,password,mob} = req.body
+        const exists = await userModal.findOne({email:email})
+        if(exists){
+            console.log("email already exists");
+            return res.status(200).json({alert:"Email already Exists",status:false})
+        }else{
+            const hash = await bcrypt.hash(password,10)
+            const newuser = await userModal.create({name:name,email:email,password:hash,mob:mob,is_admin:false})
+            const token = jwt.sign({ userId: newuser._id }, process.env.JwtSecretKey, { expiresIn: '1m' });
+            return res.status(200).json({ token: token,user:newuser, alert:'Registred', status: true});
+        }
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
 module.exports={
     useLogin,
     userData,
     deleteUser,
     getUser,
-    editUser
+    editUser,
+    addUser
 }

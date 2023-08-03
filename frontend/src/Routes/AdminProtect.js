@@ -8,7 +8,7 @@ function AdminProtect(props) {
         return props.children;
       }
       // toast('You have no account, Please Login');
-      return <Navigate to="/login" />;
+      return <Navigate to="/admin/login" />;
 }
 
 

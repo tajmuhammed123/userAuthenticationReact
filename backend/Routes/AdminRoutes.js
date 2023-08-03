@@ -8,5 +8,6 @@ AdminRouter.get('/getusers',AdminController.userData)
 AdminRouter.post('/deleteuser',AdminController.deleteUser)
 AdminRouter.post('/updateuser',AdminController.editUser)
 AdminRouter.get('/userdetails/:id',AdminController.getUser)
+AdminRouter.post('/adduser',AdminController.addUser)
 
 module.exports = AdminRouter

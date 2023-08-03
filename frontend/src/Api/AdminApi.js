@@ -49,3 +49,12 @@ export async function userDetails(userid){
         console.log(error.message);
     }
 }
+
+export async function AddUser(credentials){
+    try {
+       const data = await adminApi.post('/adduser',credentials)
+       return data
+    } catch (error) {
+       console.log(error);
+    }
+}

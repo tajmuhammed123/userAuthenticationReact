@@ -44,7 +44,7 @@ function AdminHome() {
     const handleLogIn=()=>{
         navigate('/admin/login')
     }
-
+  
     const handleSearchInput=(e)=>{
       setSearchInput(e.target.value)
     }
@@ -97,6 +97,7 @@ function AdminHome() {
         <MDBCol md="3">
           <MDBInput hint="Search" type="text" containerClass="mt-0" value={searchInput} onChange={handleSearchInput} />
         </MDBCol>
+        <Button variant="outline-success" onClick={()=>navigate('/admin/adduser')}>Add User</Button>{' '}
         <Table striped bordered hover variant="dark" style={{width:'600px', borderRadius:'10px '}}>
           <thead>
             <tr>

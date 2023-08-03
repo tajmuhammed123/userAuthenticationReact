@@ -5,6 +5,7 @@ import EditUser from '../Pages/Admin/EditUser'
 import AdminProtect from './AdminProtect'
 import AdminLogin from '../Pages/Admin/AdminLogin'
 import AdminPublic from './AdminPublic'
+import AddUser from '../Pages/Admin/AddUser'
 
 function AdminRoutes() {
   return (
@@ -12,6 +13,7 @@ function AdminRoutes() {
         <Route path="/login" element={<AdminPublic> <AdminLogin /></AdminPublic> }/>
         <Route path="/home" element={<AdminProtect> <AdminHome /></AdminProtect> }/>
         <Route path="/edituser/:id" element={<AdminProtect> <EditUser /></AdminProtect> }/>
+        <Route path="/adduser" element={<AdminProtect> <AddUser /></AdminProtect> }/>
     </Routes>
   )
 }
