@@ -30,7 +30,7 @@ function AdminHome() {
     const {id,name,email,mob}=useSelector(state=>state.user)
     const handleLogout=()=>{
         console.log('user logged out');
-        localStorage.removeItem('token')
+        localStorage.removeItem('admintoken')
         dispatch(logOutUser({
             id:'',
             name:'',
@@ -82,7 +82,7 @@ function AdminHome() {
             <Nav.Link href="#action2">Link</Nav.Link>
           </Nav>
           
-            {localStorage.getItem('token') ? <Form className='d-flex align-items-center'>
+            {localStorage.getItem('admintoken') ? <Form className='d-flex align-items-center'>
                 <Nav.Link>Signed as: <span style={{fontWeight:'bold'}}>{name}</span></Nav.Link>
                 <Button variant="outline-success" className='mx-3' onClick={handleLogout}>LogOut</Button>
                 </Form> : <Button variant="outline-success" className='mx-3' onClick={handleLogIn}>LogIn</Button>}

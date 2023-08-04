@@ -4,7 +4,7 @@ import { Navigate } from 'react-router-dom';
 
 
 function AdminProtect(props) {
-    if (localStorage.getItem('token')) {
+    if (localStorage.getItem('admintoken')) {
         return props.children;
       }
       // toast('You have no account, Please Login');

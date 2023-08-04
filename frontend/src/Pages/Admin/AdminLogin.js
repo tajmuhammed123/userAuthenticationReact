@@ -37,7 +37,7 @@ function Login() {
           console.log(response);
           toast(response.data.alert)
         if (response.data.status) {
-          localStorage.setItem("token",response.data.token)
+          localStorage.setItem("admintoken",response.data.token)
           dispatch(setUserDetails({
             id:response.data.user._id,
             name:response.data.user.name,

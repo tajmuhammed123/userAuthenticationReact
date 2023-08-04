@@ -4,9 +4,9 @@ const adminApi = axios.create({
     baseURL:`http://localhost:4000/admin`
 })
 adminApi.interceptors.request.use((req) => {
-    if (localStorage.getItem("token")) {
+    if (localStorage.getItem("admintoken")) {
         console.log("intersrptor");
-        req.headers.Authorization = "Bearer" + localStorage.getItem("token");
+        req.headers.Authorization = "Bearer" + localStorage.getItem("admintoken");
     }
     console.log("not the if of interseptor");
     return req; 
